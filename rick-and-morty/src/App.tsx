@@ -1,19 +1,6 @@
 import React from 'react';
 import {Store} from './Store'
-
-interface IEpisode {
- airdate: string,
- airstamp: string,
- airtime: string,
- id: number,
- image: {medium: string, original: string},
- name: string,
- number: number,
- runtime: number,
- season: number,
- summary: string,
- url: string
-}
+import {IAction, IEpisode} from './interfaces'
 
 export default function App():JSX.Element {
   const {state, dispatch} = React.useContext(Store)
@@ -32,18 +19,36 @@ export default function App():JSX.Element {
    })
  }
 
+ const toggleFavoriteAction = (episode: IEpisode): IAction => {
+  const episodeInFav = state.favourites.includes(episode)
+  let dispatchObj = {
+    type: 'ADD_FAV',
+    payload: episode
+  }
+  if (episodeInFav) {
+    dispatchObj = {
+      type: 'REMOVE_FAV',
+      payload: episode
+  }
+}
+ return dispatch(dispatchObj)
+ }
+
   return (
     <React.Fragment>
-      <h1>Rick and Morty Season Picker</h1>
-      <p>Pick your favorite episode!</p>
-      <section>
+      <header className="header">
+        <h1>Rick and Morty Season Picker</h1>
+        <p>Pick your favorite episode!</p>
+      </header>
+      <section className="episode-layout">
         {state.episodes.map((episode: IEpisode) => {
           return (
-            <section key={episode.id}>
+            <section key={episode.id} className="episode-box">
               <img src={episode.image.medium} alt='Rick and Morty {episode.name}'/>
               <div>{episode.name}</div>
               <section>
-                Season: {episode.season} Number: {episode.number}
+                <div>Season: {episode.season} Number: {episode.number}</div>
+                <button type="button" onClick={() => toggleFavoriteAction(episode)}>Fav</button>
               </section>
             </section>
           )
