@@ -20,17 +20,19 @@ export default function App():JSX.Element {
  }
 
  const toggleFavoriteAction = (episode: IEpisode): IAction => {
-  const episodeInFav = state.favourites.includes(episode)
+  const episodeInFav = state.favorites.includes(episode)
   let dispatchObj = {
     type: 'ADD_FAV',
     payload: episode
   }
   if (episodeInFav) {
+    const favWithoutEpisode = state.favorites.filter((fav: IEpisode) => fav.id !== episode.id)
     dispatchObj = {
       type: 'REMOVE_FAV',
-      payload: episode
+      payload: favWithoutEpisode
+    }
   }
-}
+
  return dispatch(dispatchObj)
  }
 
@@ -48,7 +50,9 @@ export default function App():JSX.Element {
               <div>{episode.name}</div>
               <section>
                 <div>Season: {episode.season} Number: {episode.number}</div>
-                <button type="button" onClick={() => toggleFavoriteAction(episode)}>Fav</button>
+                <button type="button" onClick={() => toggleFavoriteAction(episode)}>
+                  {state.favorites.find((fav: IEpisode) => fav.id === episode.id) ? 'Unfav' : 'Fav'}
+                </button>
               </section>
             </section>
           )
