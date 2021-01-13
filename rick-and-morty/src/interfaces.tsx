@@ -23,4 +23,10 @@ export interface IEpisode {
     season: number,
     summary: string,
     url: string
-   }
+}
+
+export interface IEpisodeProps {
+  episodes: Array<IEpisode>,
+  toggleFavoriteAction: (episode: IEpisode) => IAction
+  favorites: Array<IEpisode>
+}
