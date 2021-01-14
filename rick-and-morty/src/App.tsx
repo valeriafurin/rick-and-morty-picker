@@ -1,14 +1,10 @@
 import React from 'react';
 import {Store} from './Store'
-import {IAction, IEpisode, IEpisodeProps} from './interfaces'
 import {Link} from '@reach/router'
 
-const EpisodesList = React.lazy(() => import('./EpisodesList'))
-
-export default function App():JSX.Element {
- const {state, dispatch} = React.useContext(Store)
+export default function App(props: any):JSX.Element {
+ const {state} = React.useContext(Store)
  
-
   return (
     <React.Fragment>
       <header className="header">
@@ -21,11 +17,7 @@ export default function App():JSX.Element {
           <Link to='/faves'>Favorite(s): {state.favorites.length}</Link>
         </div>
       </header>
-      <React.Suspense fallback={<div>loading ... </div>}>
-        <section className="episode-layout">
-          <EpisodesList { ...props} />
-        </section>
-      </React.Suspense>
+      {props.children}
     </React.Fragment>
   );
 }

@@ -1,6 +1,8 @@
 import React from 'react'
-import {IAction, IEpisode, IEpisodeProps} from './interfaces'
 import {Store} from './Store'
+import {IAction, IEpisode, IEpisodeProps} from './interfaces'
+
+const EpisodesList = React.lazy(() => import('./EpisodesList'))
 
 export default function HomePage() {
     const {state, dispatch} = React.useContext(Store)
@@ -40,4 +42,14 @@ export default function HomePage() {
         favorites: state.favorites
         }
 
+        return (
+          <React.Fragment>
+            <React.Suspense fallback={<div>loading ... </div>}>
+              <section className="episode-layout">
+                <EpisodesList { ...props} />
+              </section>
+            </React.Suspense>
+          </React.Fragment>
+        )
 }
+
