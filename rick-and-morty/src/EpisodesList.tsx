@@ -12,7 +12,7 @@ export default function EpisodesList(props: any): JSX.Element {
         <div>{episode.name}</div>
         <section style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
-            Season: {episode.season} Number: {episode.number}
+            Season: {episode.season} Series: {episode.number}
           </div>
           <button
             type="button"
