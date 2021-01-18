@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactComponentElement } from "react";
+import React from "react";
 import { IState, IAction } from "./interfaces";
 
 const initialState: IState = {
